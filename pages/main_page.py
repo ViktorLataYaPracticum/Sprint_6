@@ -11,8 +11,6 @@ class MainPage:
     # Кнопки заказа
     ORDER_BUTTON_TOP = [By.XPATH, ".//button[@class='Button_Button__ra12g']"]
     ORDER_BUTTON_BOTTOM = [By.XPATH, ".//button[contains(@class,'Button_Middle')]"]
-    #Аккордеон
-   # ACCORDEON = [By.CLASS_NAME, "accordion"]
 
     def __init__(self, driver):
         self.driver = driver
@@ -31,7 +29,6 @@ class MainPage:
             EC.visibility_of_element_located((By.ID, f"accordion__panel-{index}"))
         )
         return item.find_element(By.TAG_NAME, "p").text
-"""    
 
     # ---------- ЗАКАЗ ----------
     def click_order_top(self):
@@ -46,4 +43,3 @@ class MainPage:
 
     def click_yandex_logo(self):
         self.wait.until(EC.element_to_be_clickable(self.YANDEX_LOGO)).click()
-"""
