@@ -21,17 +21,16 @@ class MainPage:
     # ---------- ВОПРОСЫ ----------
     def click_question(self, index):
         question = self.wait.until(
-        EC.presence_of_element_located((By.XPATH,f".//div[@class='accordion']/div[position()={index} and @class='accordion__item']/div"))
+        EC.presence_of_element_located((By.XPATH,f".//div[@class='accordion']/div[position()={(index+1)} and @class='accordion__item']/div"))
         )
-        self.driver.execute_script("arguments[0].scrollIntoView();", question)
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", question)
         self.wait.until(EC.element_to_be_clickable(question)).click()
 
     def get_answer_text(self, index):
-        self.wait.until(
+        item=self.wait.until(
             EC.visibility_of_element_located((By.ID, f"accordion__panel-{index}"))
         )
-        item=self.driver.find_element(By.ID, f"accordion__heading-{index}")    
-        return item.find_element(By.TAG_NAME, "p").text()
+        return item.find_element(By.TAG_NAME, "p").text
 """    
 
     # ---------- ЗАКАЗ ----------
