@@ -1,39 +1,29 @@
-from selenium.webdriver.common.by import By
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from locators import *
 
 class OrderPage:
-    NAME = [By.XPATH, ".//input[@placeholder='* Имя']"]
-    SURNAME = [By.XPATH, ".//input[@placeholder='* Фамилия']"]
-    ADDRESS = [By.XPATH, ".//input[@placeholder='* Адрес: куда привезти заказ']"]
-    METRO = [By.XPATH, ".//input[@placeholder='* Станция метро']"]
-    PHONE = [By.XPATH, ".//input[@placeholder='* Телефон: на него позвонит курьер']"]
-    NEXT_BUTTON = [By.XPATH, ".//button[text()='Далее']"]
-
-    DATE = [By.XPATH, ".//input[@placeholder='* Когда привезти самокат']"]
-    RENTAL_PERIOD = [By.CLASS_NAME, "Dropdown-placeholder"]
-    RENTAL_OPTION = [By.XPATH, ".//div[text()='сутки']"]
-    COLOR_BLACK = [By.ID, "black"]
-    COMMENT = [By.XPATH, ".//input[@placeholder='Комментарий для курьера']"]
-    ORDER_BUTTON = [By.XPATH, ".//button[contains(text(),'Заказать')]"]
-    CONFIRM_BUTTON = [By.XPATH, ".//button[text()='Да']"]
-
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(driver, 5)
 
     def fill_first_page(self, name, surname, address, metro, phone):
-        self.driver.find_element(*self.NAME).send_keys(name)
-        self.driver.find_element(*self.SURNAME).send_keys(surname)
-        self.driver.find_element(*self.ADDRESS).send_keys(address)
-        self.driver.find_element(*self.METRO).send_keys(metro)
-        self.driver.find_element(*self.METRO).click()
-        self.driver.find_element(*self.PHONE).send_keys(phone)
-        self.driver.find_element(*self.NEXT_BUTTON).click()
+        self.driver.find_element(*OrderPageLocators.NAME).send_keys(name)
+        self.driver.find_element(*OrderPageLocators.SURNAME).send_keys(surname)
+        self.driver.find_element(*OrderPageLocators.ADDRESS).send_keys(address)
+        self.driver.find_element(*OrderPageLocators.METRO).click()
+        self.driver.find_element(*OrderPageLocators.METRO).send_keys(metro)
+        self.driver.find_element(*OrderPageLocators.METRO_LIST_ITEM).click()
+        self.driver.find_element(*OrderPageLocators.PHONE).clear()
+        self.driver.find_element(*OrderPageLocators.PHONE).send_keys(phone)
+        self.driver.find_element(*OrderPageLocators.NEXT_BUTTON).click()
 
     def fill_second_page(self, date, comment):
-        self.driver.find_element(*self.DATE).send_keys(date)
-        self.driver.find_element(*self.RENTAL_PERIOD).click()
-        self.driver.find_element(*self.RENTAL_OPTION).click()
-        self.driver.find_element(*self.COLOR_BLACK).click()
-        self.driver.find_element(*self.COMMENT).send_keys(comment)
-        self.driver.find_element(*self.ORDER_BUTTON).click()
-        self.driver.find_element(*self.CONFIRM_BUTTON).click()
+        self.driver.find_element(*OrderPageLocators.DATE).send_keys(date)
+        self.wait.until(EC.element_to_be_clickable(OrderPageLocators.DATEPICKER_SELECTED)).click() 
+        self.driver.find_element(*OrderPageLocators.RENTAL_PERIOD).click()
+        self.driver.find_element(*OrderPageLocators.RENTAL_OPTION).click()
+        self.driver.find_element(*OrderPageLocators.COLOR_BLACK).click()
+        self.driver.find_element(*OrderPageLocators.COMMENT).send_keys(comment)
+        self.wait.until(EC.element_to_be_clickable(OrderPageLocators.ORDER_BUTTON)).click()
+        self.wait.until(EC.element_to_be_clickable(OrderPageLocators.CONFIRM_BUTTON)).click()
