@@ -1,12 +1,13 @@
 from selenium.webdriver.common.by import By
 
-class MainPageLocators:
+class BasePageLocators:
      # Логотипы
     SCOOTER_LOGO = [By.CLASS_NAME, "Header_LogoScooter__3lsAR"]                             #Логотип "Самокат"
     YANDEX_LOGO = [By.CLASS_NAME, "Header_LogoYandex__3TSOI"]                               #Логотип "Яндекс"  
 
-    # Кнопки заказа
     ORDER_BUTTON_TOP = [By.XPATH, ".//button[@class='Button_Button__ra12g']"]               #Кнопка "Заказать" в шапке
+
+class MainPageLocators:
     ORDER_BUTTON_BOTTOM = [By.XPATH, ".//button[contains(@class,'Button_Middle')]"]         #Кнопка "Заказать" на странице
 
 class OrderPageLocators:

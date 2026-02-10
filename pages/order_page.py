@@ -1,12 +1,13 @@
-from selenium.webdriver.support.ui import WebDriverWait
+import allure
+from pages.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
 from locators import *
 
-class OrderPage:
+class OrderPage(BasePage):
     def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 5)
+        super().__init__(driver)
 
+    @allure.step('Заполняем поля первого шага формы заказа. Клик на кнопке "Далее"')
     def fill_first_page(self, name, surname, address, metro, phone):
         self.driver.find_element(*OrderPageLocators.NAME).send_keys(name)
         self.driver.find_element(*OrderPageLocators.SURNAME).send_keys(surname)
@@ -18,6 +19,7 @@ class OrderPage:
         self.driver.find_element(*OrderPageLocators.PHONE).send_keys(phone)
         self.driver.find_element(*OrderPageLocators.NEXT_BUTTON).click()
 
+    @allure.step('Заполняем поля второго шага формы заказа. Клик на кнопке "Заказать"')
     def fill_second_page(self, date, comment):
         self.driver.find_element(*OrderPageLocators.DATE).send_keys(date)
         self.wait.until(EC.element_to_be_clickable(OrderPageLocators.DATEPICKER_SELECTED)).click() 
