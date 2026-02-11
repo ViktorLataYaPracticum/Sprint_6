@@ -1,4 +1,3 @@
-import allure
 import pytest
 from selenium import webdriver
 from constants import Constants
