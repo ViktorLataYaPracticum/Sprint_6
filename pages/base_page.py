@@ -4,31 +4,60 @@ from selenium.webdriver.support import expected_conditions as EC
 from locators import *
 
 class BasePage:
-    
+
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, 5)
+        self.wait = WebDriverWait(driver, 10)
 
-    @allure.step('Прокрутка страницы до целевого элемента')
-    def scrollToElement(self,element):
-        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+    def find_element(self, locator):
+        return self.wait.until(
+            EC.presence_of_element_located(locator)
+        )
+
+    def find_visible_element(self, locator):
+        return self.wait.until(
+            EC.visibility_of_element_located(locator)
+        )
+
+    def click_element(self, locator):
+        element = self.wait.until(
+            EC.element_to_be_clickable(locator)
+        )
+        element.click()
+
+    def scroll_to_element(self, element):
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center'});",
+            element
+        )
+    def scroll_and_click(self, locator):
+        element = self.find_element(locator)
+        self.scroll_to_element(element)
+        self.click_element(locator)
+
+    def get_current_url(self):
+        return self.driver.current_url
+
+    def switch_to_window(self, index=1):
+        self.driver.switch_to.window(self.driver.window_handles[index])
+        
+    def wait_for_new_window_and_switch(self, timeout=10):
+        self.wait.until(EC.number_of_windows_to_be(2))
+        self.driver.switch_to.window(self.driver.window_handles[1])
+
+    def wait_for_url_contains(self, text, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            EC.url_contains(text)
+        )
 
     @allure.step('Клик на кнопку "Заказать" в шапке страницы сервиса')
     def click_order_top(self):
-        self.wait.until(EC.element_to_be_clickable(BasePageLocators.ORDER_BUTTON_TOP)).click()    
+        self.click_element(BasePageLocators.ORDER_BUTTON_TOP)
 
-    # ---------- ЛОГОТИПЫ ----------
-    @allure.step('Клик на лого "Самокат" в шапке страницы сервиса')
+    @allure.step('Клик на логотип "Самокат" в шапке страницы сервиса')
     def click_scooter_logo(self):
-        self.wait.until(EC.element_to_be_clickable(BasePageLocators.SCOOTER_LOGO)).click()
-
-    @allure.step('Клик на лого "Яндекс" в шапке страницы сервиса')
+        self.click_element(BasePageLocators.SCOOTER_LOGO)
+        
+    @allure.step('Клик на логотип "Яндекс" в шапке страницы сервиса')
     def click_yandex_logo(self):
-        self.wait.until(EC.element_to_be_clickable(BasePageLocators.YANDEX_LOGO)).click()    
-    
-    def get_current_url(self):
-        return self.driver.current_url
-    
-    def switch_to_window(self):
-        self.driver.switch_to.window(self.driver.window_handles[1])   
-    
+        self.click_element(BasePageLocators.YANDEX_LOGO)  

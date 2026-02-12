@@ -8,7 +8,15 @@ class BasePageLocators:
     ORDER_BUTTON_TOP = [By.XPATH, ".//button[@class='Button_Button__ra12g']"]               #Кнопка "Заказать" в шапке
 
 class MainPageLocators:
-    ORDER_BUTTON_BOTTOM = [By.XPATH, ".//button[contains(@class,'Button_Middle')]"]         #Кнопка "Заказать" на странице
+    ORDER_BUTTON_BOTTOM = [By.XPATH, ".//button[contains(@class,'Button_Middle')]"]         #Кнопка "Заказать" на странице\
+
+    @staticmethod                                                                           #вопрос с индексом index
+    def QUESTION(index):
+        return [By.XPATH,f".//div[@class='accordion']/div[position()={index+1} and @class='accordion__item']/div"]
+
+    @staticmethod                                                                           #ответ с индексом index
+    def ANSWER(index):
+        return [By.ID, f"accordion__panel-{index}"]
 
 class OrderPageLocators:
     #Поля формы заказа первого шага
