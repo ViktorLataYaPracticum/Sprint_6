@@ -6,17 +6,18 @@ class BasePageLocators:
     YANDEX_LOGO = [By.CLASS_NAME, "Header_LogoYandex__3TSOI"]                               #Логотип "Яндекс"  
 
     ORDER_BUTTON_TOP = [By.XPATH, ".//button[@class='Button_Button__ra12g']"]               #Кнопка "Заказать" в шапке
+    COOCKIE_BUTTON = [By.ID, "rcc-confirm-button"]                                          #Кнопка согласия с куками
 
 class MainPageLocators:
-    ORDER_BUTTON_BOTTOM = [By.XPATH, ".//button[contains(@class,'Button_Middle')]"]         #Кнопка "Заказать" на странице\
+    ORDER_BUTTON_BOTTOM = [By.XPATH, ".//button[contains(@class,'Button_Middle')]"]         #Кнопка "Заказать" на странице
 
     @staticmethod                                                                           #вопрос с индексом index
     def QUESTION(index):
-        return [By.XPATH,f".//div[@class='accordion']/div[position()={index+1} and @class='accordion__item']/div"]
+        return (By.XPATH,f".//div[@class='accordion']/div[position()={index+1} and @class='accordion__item']/div")
 
     @staticmethod                                                                           #ответ с индексом index
     def ANSWER(index):
-        return [By.ID, f"accordion__panel-{index}"]
+        return (By.XPATH, f".//div[@class='accordion__panel' and @id='accordion__panel-{index}']/p")
 
 class OrderPageLocators:
     #Поля формы заказа первого шага
@@ -41,4 +42,3 @@ class OrderPageLocators:
 
 class OrderStatusPageLocators:
     SUCCESS_TITLE = [By.XPATH, ".//div[contains(text(),'Заказ оформлен')]"]                 #Заголовок модального окна успешного заказа
-    VIEW_STATUS_BUTTON = [By.XPATH, ".//button[text()='Посмотреть статус']"]                #Кнопка просмотра статуса заказа

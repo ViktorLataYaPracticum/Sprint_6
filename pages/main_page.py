@@ -10,8 +10,7 @@ class MainPage(BasePage):
 
     @allure.step('Получаем текст очередного ответа')
     def get_answer_text(self, index):
-        element = self.find_visible_element(MainPageLocators.ANSWER(index))
-        return element.find_element(By.TAG_NAME, "p").text
+        return self.find_visible_element(MainPageLocators.ANSWER(index)).text
 
     # ---------- ЗАКАЗ ----------
     @allure.step('Клик на кнопку заказа на главной странице')
