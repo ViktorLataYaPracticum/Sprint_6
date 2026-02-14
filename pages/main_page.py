@@ -1,6 +1,6 @@
 import allure
 from pages.base_page import BasePage
-from locators import *
+from locators import MainPageLocators,BasePageLocators
 from urls import Urls
 
 class MainPage(BasePage):
@@ -18,15 +18,15 @@ class MainPage(BasePage):
     def click_order_bottom(self):
         self.scroll_and_click(MainPageLocators.ORDER_BUTTON_BOTTOM)
     
-    @allure.step('Клик на логотип "Яндекс" в шапке страницы сервиса')
+    @allure.step('Переход на страницу Dzen по клику на логотип "Яндекс" в шапке страницы сервиса')
     def go_to_dzen_via_yandex_logo(self):
-        self.click_yandex_logo()
+        self.click_element(BasePageLocators.YANDEX_LOGO)
         self.wait_for_new_window_and_switch()
         self.wait_for_url_contains(Urls.DZEN_URL) 
            
     @allure.step('Переход на главную страницу через логотип Самокат')
     def go_to_main_page_via_logo(self):
-        self.click_scooter_logo()
+        self.click_element(BasePageLocators.SCOOTER_LOGO)
 
     @allure.step('Проверяем, что открыта главная страница сервиса')
     def is_main_page_opened(self):

@@ -1,6 +1,6 @@
 import allure
 from pages.base_page import BasePage
-from locators import *
+from locators import OrderStatusPageLocators
 
 class OrderStatusPage(BasePage):
 

@@ -2,7 +2,6 @@ import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from locators import *
 
 class BasePage:
 
@@ -35,7 +34,7 @@ class BasePage:
   
     @allure.step('Клик по элементу locator с ожиданием его clickable')
     def click_element(self, locator):
-        element = self.wait.until(
+        self.wait.until(
             EC.element_to_be_clickable(locator)
         ).click()
         
@@ -70,11 +69,3 @@ class BasePage:
         self.wait.until(
             EC.url_contains(text)
         )     
-         
-    @allure.step('Клик на логотип "Самокат" в шапке страницы сервиса')
-    def click_scooter_logo(self):
-        self.click_element(BasePageLocators.SCOOTER_LOGO)
-         
-    @allure.step('Клик на логотип "Яндекс" в шапке страницы сервиса')
-    def click_yandex_logo(self):
-        self.click_element(BasePageLocators.YANDEX_LOGO)        
