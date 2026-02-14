@@ -69,20 +69,12 @@ class BasePage:
     def wait_for_url_contains(self, text):
         self.wait.until(
             EC.url_contains(text)
-        )
-
-    @allure.step('Клик на кнопку "Заказать" в шапке страницы сервиса')
-    def click_order_top(self):
-        self.click_element(BasePageLocators.ORDER_BUTTON_TOP)
-
+        )     
+         
     @allure.step('Клик на логотип "Самокат" в шапке страницы сервиса')
     def click_scooter_logo(self):
         self.click_element(BasePageLocators.SCOOTER_LOGO)
-        
+         
     @allure.step('Клик на логотип "Яндекс" в шапке страницы сервиса')
     def click_yandex_logo(self):
-        self.click_element(BasePageLocators.YANDEX_LOGO)  
-        
-    @allure.step('Клик по кнопке согласия с куками, на маленьком экране панель с куками перекрывает кнопку перехода на второй этап оформления')
-    def click_coockie_button(self):
-        self.click_presents_element(BasePageLocators.COOCKIE_BUTTON)      
+        self.click_element(BasePageLocators.YANDEX_LOGO)        

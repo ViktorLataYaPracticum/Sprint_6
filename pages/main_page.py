@@ -1,6 +1,7 @@
 import allure
 from pages.base_page import BasePage
 from locators import *
+from urls import Urls
 
 class MainPage(BasePage):
     # ---------- ВОПРОСЫ ---------
@@ -16,3 +17,29 @@ class MainPage(BasePage):
     @allure.step('Клик на кнопку заказа на главной странице')
     def click_order_bottom(self):
         self.scroll_and_click(MainPageLocators.ORDER_BUTTON_BOTTOM)
+    
+    @allure.step('Клик на логотип "Яндекс" в шапке страницы сервиса')
+    def go_to_dzen_via_yandex_logo(self):
+        self.click_yandex_logo()
+        self.wait_for_new_window_and_switch()
+        self.wait_for_url_contains(Urls.DZEN_URL) 
+           
+    @allure.step('Переход на главную страницу через логотип Самокат')
+    def go_to_main_page_via_logo(self):
+        self.click_scooter_logo()
+
+    @allure.step('Проверяем, что открыта главная страница сервиса')
+    def is_main_page_opened(self):
+        return self.get_current_url() == Urls.SERVICE_URL    
+    
+    @allure.step('Проверяем, что открыт Дзен')
+    def is_dzen_opened(self):
+        return Urls.DZEN_URL in self.get_current_url()
+        
+    @allure.step('Клик на кнопку "Заказать" в шапке страницы сервиса')
+    def click_order_top(self):
+        self.click_element(BasePageLocators.ORDER_BUTTON_TOP)
+        
+    @allure.step('Клик по кнопке согласия с куками, на маленьком экране панель с куками перекрывает кнопку перехода на второй этап оформления')
+    def click_coockie_button(self):
+        self.click_presents_element(BasePageLocators.COOCKIE_BUTTON)
